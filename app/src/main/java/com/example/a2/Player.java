@@ -29,8 +29,8 @@ public class Player {
     public void draw(Canvas canvas) {
         canvas.drawBitmap(
                 playerBitmap,
-                (float) positionX-playerBitmap.getWidth()/2,
-                (float) positionY-playerBitmap.getHeight()/2,
+                (float) positionX-(float)playerBitmap.getWidth()/2,
+                (float) positionY-(float)playerBitmap.getHeight()/2,
                 null);
     }
 
