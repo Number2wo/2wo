@@ -38,10 +38,10 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
         // handle touch event actions
         switch(event.getAction()){
             case MotionEvent.ACTION_DOWN:
-                player.setPosition((double)event.getX(), (double)event.getY());
+                player.setPosition(event.getX(), event.getY());
                 return true;
             case MotionEvent.ACTION_MOVE:
-                player.setPosition((double)event.getX(), (double)event.getY());
+                player.setPosition(event.getX(), event.getY());
                 return true;
         }
         return super.onTouchEvent(event);
