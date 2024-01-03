@@ -1,10 +1,8 @@
 package com.example.a2;
 
 import android.graphics.Canvas;
-import android.view.Surface;
 import android.view.SurfaceHolder;
 
-import java.util.zip.Adler32;
 
 public class GameLoop extends Thread {
     private static final double MAX_UPS = 30.00;
