@@ -11,20 +11,24 @@ import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 
 
-//Game manage all obj in game and is responsible for updating all states & render all obj to screen
+// game manages all obj in game and is responsible for updating all states & render all obj to screen
 
 public class Game extends SurfaceView implements SurfaceHolder.Callback {
     private final Player player;
+    private final Joystick joystick;
     private GameLoop gameLoop;
 
     public Game(Context context) {
         super(context);
 
-        // Get surface holder and add callback
+        // get surface holder and add callback
         SurfaceHolder surfaceHolder = getHolder();
         surfaceHolder.addCallback(this);
 
         gameLoop = new GameLoop(this, surfaceHolder);
+
+        // initialize game objects
+        joystick = new Joystick(175,850,50,20);
 
         // initialize player
         player = new Player(getContext(), 500, 500);
@@ -38,10 +42,20 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
         // handle touch event actions
         switch(event.getAction()){
             case MotionEvent.ACTION_DOWN:
-                player.setPosition(event.getX(), event.getY());
+                if(joystick.isPressed(event.getX(),event.getY())){
+                    joystick.setIsPressed(true);
+                }
+                // sets player where ever user touches on screen
+                //player.setPosition(event.getX(), event.getY());
                 return true;
             case MotionEvent.ACTION_MOVE:
-                player.setPosition(event.getX(), event.getY());
+                if(joystick.getIsPressed()){
+                    joystick.setActuator(event.getX(),event.getY());
+                }
+                return true;
+            case MotionEvent.ACTION_UP:
+                joystick.setIsPressed(false);
+                joystick.resetActuator();
                 return true;
         }
         return super.onTouchEvent(event);
@@ -62,14 +76,15 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
 
     }
 
-    //add all rendering calls to draw method
-    //canvas is the class that you draw things on
+    // add all rendering calls to draw method
+    // canvas is the class that you draw things on
     @Override
     public void draw(Canvas canvas) {
         super.draw(canvas);
         drawUPS(canvas);
         drawFPS(canvas);
 
+        joystick.draw(canvas);
         player.draw(canvas);
     }
 
@@ -94,6 +109,7 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
 
     public void update() {
         // update game state
-        player.update();
+        joystick.update();
+        player.update(joystick);
     }
 }

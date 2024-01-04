@@ -6,12 +6,16 @@ import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 
 public class Player {
+    private static final double SPEED_PIXELS_PER_SECOND = 322.22;
+    private static final double MAX_SPEED = SPEED_PIXELS_PER_SECOND / GameLoop.MAX_UPS;
     private double positionX;
     private double positionY;
     private Bitmap playerBitmap;
 
     // adjust the bitmap img scale factor based on desired size
-    private static final float SCALE_FACTOR = .01f;
+    private static final float SCALE_FACTOR = .1f;
+    private double velocityX;
+    private double velocityY;
 
     public Player(Context context, double positionX, double positionY) {
         this.positionX = positionX;
@@ -34,7 +38,11 @@ public class Player {
                 null);
     }
 
-    public void update() {
+    public void update(Joystick joystick) {
+        velocityX = joystick.getActuatorX()*MAX_SPEED;
+        velocityY= joystick.getActuatorY()*MAX_SPEED;
+        positionX += velocityX;
+        positionY += velocityY;
     }
 
     public void setPosition(double positionX, double positionY) {
