@@ -6,7 +6,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 
 public class Player {
-    private static final double SPEED_PIXELS_PER_SECOND = 322.22;
+    private static final double SPEED_PIXELS_PER_SECOND = 422.22;
     private static final double MAX_SPEED = SPEED_PIXELS_PER_SECOND / GameLoop.MAX_UPS;
     private double positionX;
     private double positionY;

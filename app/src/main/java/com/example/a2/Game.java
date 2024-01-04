@@ -28,7 +28,7 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
         gameLoop = new GameLoop(this, surfaceHolder);
 
         // initialize game objects
-        joystick = new Joystick(175,850,50,20);
+        joystick = new Joystick(122,875,90,60);
 
         // initialize player
         player = new Player(getContext(), 500, 500);
