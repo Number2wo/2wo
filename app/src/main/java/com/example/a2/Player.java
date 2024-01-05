@@ -1,52 +1,47 @@
 package com.example.a2;
-
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 
-public class Player {
+/** Player is the main character of the game, which the user controls with the joystick
+ *  the player is an extension of the GameObject
+ **/
+public class Player extends GameObject {
     private static final double SPEED_PIXELS_PER_SECOND = 422.22;
     private static final double MAX_SPEED = SPEED_PIXELS_PER_SECOND / GameLoop.MAX_UPS;
-    private double positionX;
-    private double positionY;
-    private Bitmap playerBitmap;
-
+    private final Joystick joystick;
     // adjust the bitmap img scale factor based on desired size
     private static final float SCALE_FACTOR = .1f;
-    private double velocityX;
-    private double velocityY;
 
-    public Player(Context context, double positionX, double positionY) {
-        this.positionX = positionX;
-        this.positionY = positionY;
+    public Player(Context context, Joystick joystick, double positionX, double positionY) {
+       super(positionX,positionY);
+       this.joystick = joystick;
 
-        playerBitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.jr);
-
+       // create method to pass this in as a parameter for the Enemy constructor
+       //player image
+        bitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.jr);
         //scale the bitmap based on the desired size
-        int scaledWidth = (int) (playerBitmap.getWidth() * SCALE_FACTOR);
-        int scaledHeight = (int) (playerBitmap.getHeight() * SCALE_FACTOR);
-        playerBitmap = Bitmap.createScaledBitmap(playerBitmap, scaledWidth, scaledHeight, false);
+        int scaledWidth = (int) (bitmap.getWidth() * SCALE_FACTOR);
+        int scaledHeight = (int) (bitmap.getHeight() * SCALE_FACTOR);
+        bitmap = Bitmap.createScaledBitmap(bitmap, scaledWidth, scaledHeight, false);
 
     }
 
     public void draw(Canvas canvas) {
         canvas.drawBitmap(
-                playerBitmap,
-                (float) positionX-(float)playerBitmap.getWidth()/2,
-                (float) positionY-(float)playerBitmap.getHeight()/2,
+                bitmap,
+                (float) positionX-(float) bitmap.getWidth()/2,
+                (float) positionY-(float) bitmap.getHeight()/2,
                 null);
     }
 
-    public void update(Joystick joystick) {
+    public void update() {
+        // update velocity based on actuator of joystick
         velocityX = joystick.getActuatorX()*MAX_SPEED;
         velocityY= joystick.getActuatorY()*MAX_SPEED;
+        // update position
         positionX += velocityX;
         positionY += velocityY;
-    }
-
-    public void setPosition(double positionX, double positionY) {
-        this.positionX = positionX;
-        this.positionY = positionY;
     }
 }
