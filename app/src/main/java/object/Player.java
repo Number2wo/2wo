@@ -1,15 +1,19 @@
-package com.example.a2;
+package object;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 
+import com.example.a2.GameLoop;
+import com.example.a2.Joystick;
+import com.example.a2.R;
+
 /** Player is the main character of the game, which the user controls with the joystick
  *  the player is an extension of the GameObject
  **/
 public class Player extends GameObject {
-    private static final double SPEED_PIXELS_PER_SECOND = 422.22;
-    private static final double MAX_SPEED = SPEED_PIXELS_PER_SECOND / GameLoop.MAX_UPS;
+    public static final double SPEED_PIXELS_PER_SECOND = 422.22;
+    public static final double MAX_SPEED = SPEED_PIXELS_PER_SECOND / GameLoop.MAX_UPS;
     private final Joystick joystick;
     // adjust the bitmap img scale factor based on desired size
     private static final float SCALE_FACTOR = .1f;

@@ -1,4 +1,4 @@
-package com.example.a2;
+package object;
 
 import android.content.Context;
 import android.graphics.Canvas;
